@@ -576,11 +576,12 @@ namespace cAudio
 		cAudioMutexBasicLock lock(Mutex);
 		cAudioVector<IAudioSource*>::Type::iterator audioSourcesIter;
 
-		for(audioSourcesIter = audioSources.begin(); audioSourcesIter != audioSources.end(); audioSourcesIter++)
-		{
-			if((*audioSourcesIter))
-				(*audioSourcesIter)->drop();
-		}
+        cAudioVector<IAudioSource*>::Type deleteSources = audioSources;
+        for(audioSourcesIter = deleteSources.begin(); audioSourcesIter != deleteSources.end(); ++audioSourcesIter) 
+        {
+            if((*audioSourcesIter))
+                (*audioSourcesIter)->drop();
+        }
 		audioSources.clear();
 		audioIndex.clear();
 
